@@ -1,8 +1,7 @@
 const USER_SERVICE_URL = "http://localhost:8080";
 
 export const login = async (email: string, password: string) => {
-	const response = await fetch(`${USER_SERVICE_URL}/auth/login`, 
-	{
+	const response = await fetch(`${USER_SERVICE_URL}/auth/login`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -19,8 +18,7 @@ export const register = async (
 	email: string,
 	password: string,
 ) => {
-	const response = await fetch(`${USER_SERVICE_URL}/auth/register`, 
-	{
+	const response = await fetch(`${USER_SERVICE_URL}/auth/register`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -29,5 +27,14 @@ export const register = async (
 	});
 
 	if (!response.ok) throw new Error("Registration failed");
+	return await response.json();
+};
+
+export const getUserProfile = async (userId: string) => {
+	const response = await fetch(`${USER_SERVICE_URL}/user/${userId}`, {
+		method: "GET",
+	});
+
+	if (!response.ok) throw new Error("Failed to fetch user profile");
 	return await response.json();
 };
