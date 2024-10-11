@@ -30,9 +30,16 @@ export const register = async (
 	return await response.json();
 };
 
-export const getUserProfile = async (userId: string) => {
+export const getUserProfile = async (
+	userId: string,
+	token: string,
+) => {
 	const response = await fetch(`${USER_SERVICE_URL}/user/${userId}`, {
 		method: "GET",
+		headers: {
+			Authorization: token,
+			"Content-Type": "application/json",
+		},
 	});
 
 	if (!response.ok) throw new Error("Failed to fetch user profile");
