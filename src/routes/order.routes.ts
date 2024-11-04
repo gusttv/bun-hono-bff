@@ -15,7 +15,7 @@ orderRoutes.use("*", authMiddleware);
 orderRoutes.post("/", createOrder);
 orderRoutes.get("/", listOrders);
 orderRoutes.get("/:id", getOrderById);
-orderRoutes.put("/:id", updateOrder);
+orderRoutes.patch("/:id", updateOrder);
 orderRoutes.delete("/:id", deleteOrder);
 
 export { orderRoutes };

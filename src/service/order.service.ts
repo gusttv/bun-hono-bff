@@ -54,13 +54,10 @@ export class OrderService {
 
 	async getOrderById(orderId: string): Promise<Order> {
 		try {
-			const response = await fetch(
-				`${env.ORDER_SERVICE_URL}/orders/${orderId}`,
-				{
-					method: "GET",
-					headers: { "Content-Type": "application/json" },
-				},
-			);
+			const response = await fetch(`${env.ORDER_SERVICE_URL}/orders/${orderId}`, {
+				method: "GET",
+				headers: { "Content-Type": "application/json" },
+			});
 
 			if (!response.ok) {
 				if (response.status === 404) throw new Error("Order Not found");
@@ -78,12 +75,17 @@ export class OrderService {
 	async updateOrder(
 		orderId: string,
 		updatedData: UpdateOrderData,
+		status: string,
 	): Promise<Order> {
-		const response = await fetch(`${env.ORDER_SERVICE_URL}/orders/${orderId}`, {
-			method: "PUT",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(updatedData),
-		});
+		const response = await fetch(
+			`
+			${env.ORDER_SERVICE_URL}/orders/${orderId}/status?status=${status}`,
+			{
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(updatedData),
+			},
+		);
 		return (await response.json()) as Order;
 	}
 
